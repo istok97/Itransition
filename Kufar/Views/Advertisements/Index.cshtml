@@ -1,0 +1,38 @@
+﻿@using Kufar.Models
+@model IndexViewModel
+
+@addTagHelper "*, Kufar"
+@{
+    ViewData["Title"] = "Список пользователей";
+}
+<h1>Advertisement</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tr><th>Title</th><th>Description</th></tr>
+    @foreach (Advertisement u in Model.Advertisements)
+    {
+        <tr>
+            <td>@u.Title</td>
+            <td>@u.Description</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+    <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+   
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+
+
