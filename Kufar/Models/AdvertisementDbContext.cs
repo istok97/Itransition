@@ -12,7 +12,7 @@ namespace Kufar.Models
         public AdvertisementDbContext(DbContextOptions<AdvertisementDbContext> options) 
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
         public DbSet<Advertisement> Advertisements { get; set; }
         

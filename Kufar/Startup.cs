@@ -24,7 +24,7 @@ namespace Kufar
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = "Server=GODYLA;Database=SiteKufar;Trusted_Connection=True;";
+            string connectionString = "Server=GODYLA;Database=SiteKufar1;Trusted_Connection=True;";
             services.AddDbContext<AdvertisementDbContext>(options => options.UseSqlServer(connectionString));
             services.AddIdentity<User, IdentityRole>()
         .AddEntityFrameworkStores<AdvertisementDbContext>()

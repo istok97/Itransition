@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Kufar.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,6 +16,7 @@ namespace Kufar.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: false)
                 },
                 constraints: table =>

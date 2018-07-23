@@ -1,16 +1,18 @@
-﻿@using Kufar.Models
-@model Kufar.Models.User
-@addTagHelper "*, Kufar"
+﻿@model Kufar.Models.CountryModel
 @{
-    ViewData["Title"] = "Список пользователей";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Advertisement</h1>
 <br>
-<h2>This site is for advertisement</h2>
-<p>kuku</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(m => m.StateModel, new SelectList(Model.StateModel, "Id", "StateName"), new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })
+    <br />
+    <br />
+    <select id="ddlcity" name="ddlcity" style="width: 200px"></select>
 
-
-
-
-
+    <br /><br />
+}

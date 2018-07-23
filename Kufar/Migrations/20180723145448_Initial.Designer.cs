@@ -11,9 +11,10 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    partial class AdvertisementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180723145448_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +25,6 @@ namespace Kufar.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("City");
 
                     b.Property<string>("Description");
 
