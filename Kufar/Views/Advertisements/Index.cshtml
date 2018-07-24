@@ -10,18 +10,21 @@
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <tr><th>Title</th><th>Description</th></tr>
+    <tr><th>Photo</th><th>Title</th><th>Description</th></tr>
     @foreach (Advertisement u in Model.Advertisements)
     {
         <tr>
-            <td>@u.Title</td>
-            <td>@u.Description</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
-            </td>
-        </tr>
+            <td class="thumbnail" style="height: 100px; width:80px">
+               
+                <img id="photo" style="height: 90px; width: 80px" src="@u.Photo">
+                <td>@u.Title</td>
+                <td>@u.Description</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
+                </td>
+</tr>
     }
 </table>
 
@@ -34,5 +37,9 @@
 
 
 
-
+    @*<td>
+        <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
+        <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
+    </td>*@
 

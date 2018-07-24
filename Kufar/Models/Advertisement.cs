@@ -15,8 +15,6 @@ namespace Kufar.Models
 
         public string Description { get; set; }
 
-        public string State { get; set; }
-
-        public string City { get; set; }
+        public string Photo { get; set; }
     }
 }

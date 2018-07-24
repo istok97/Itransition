@@ -59,7 +59,7 @@ namespace Kufar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Photo")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Kufar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Advertisement advertisement)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Photo")] Advertisement advertisement)
         {
             if (id != advertisement.Id)
             {
