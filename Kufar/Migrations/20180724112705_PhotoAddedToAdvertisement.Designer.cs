@@ -11,8 +11,8 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    [Migration("20180723151230_CityAddedToAdvertisement")]
-    partial class CityAddedToAdvertisement
+    [Migration("20180724112705_PhotoAddedToAdvertisement")]
+    partial class PhotoAddedToAdvertisement
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,9 @@ namespace Kufar.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("City");
-
                     b.Property<string>("Description");
 
-                    b.Property<string>("State");
+                    b.Property<string>("Photo");
 
                     b.Property<string>("Title")
                         .IsRequired();

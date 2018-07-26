@@ -22,7 +22,7 @@ namespace Kufar.Controllers
         public ActionResult GetCityByStaeId(int stateid)
         {
             List<City> objcity = new List<City>();
-            objcity = GetAllCity().Where(m => m.StateId == stateid).ToList();
+         //   objcity = GetAllCity().Where(m => m.StateId == stateid).ToList();
             SelectList obgcity = new SelectList(objcity, "Id", "CityName", 0);
             return Json(obgcity);
         }
@@ -43,13 +43,13 @@ namespace Kufar.Controllers
         public List<City> GetAllCity()
         {
             List<City> objcity = new List<City>();
-            objcity.Add(new City { Id = 1, StateId = 1, CityName = "Minsk" });
-            objcity.Add(new City { Id = 2, StateId = 2, CityName = "Гродно" });
-            objcity.Add(new City { Id = 3, StateId = 3, CityName = "Витебск" });
-            objcity.Add(new City { Id = 4, StateId = 4, CityName = "Гомель" });
-            objcity.Add(new City { Id = 5, StateId = 5, CityName = "Брест" });
-            objcity.Add(new City { Id = 6, StateId = 6, CityName = "Могилев" });
-            objcity.Add(new City { Id = 7, StateId = 1, CityName = "Молодечно" });
+            //objcity.Add(new City { Id = 1, StateId = 1, CityName = "Minsk" });
+            //objcity.Add(new City { Id = 2, StateId = 2, CityName = "Гродно" });
+            //objcity.Add(new City { Id = 3, StateId = 3, CityName = "Витебск" });
+            //objcity.Add(new City { Id = 4, StateId = 4, CityName = "Гомель" });
+            //objcity.Add(new City { Id = 5, StateId = 5, CityName = "Брест" });
+            //objcity.Add(new City { Id = 6, StateId = 6, CityName = "Могилев" });
+            //objcity.Add(new City { Id = 7, StateId = 1, CityName = "Молодечно" });
             return objcity;
         }
     }

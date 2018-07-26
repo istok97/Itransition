@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Kufar.ViewModels;
 using Kufar.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kufar.Controllers
 {
@@ -28,7 +30,7 @@ namespace Kufar.Controllers
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
-
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)

@@ -11,8 +11,8 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    [Migration("20180724072212_PhotoAddedToAdvertisement")]
-    partial class PhotoAddedToAdvertisement
+    [Migration("20180724112836_CityAndCountryAddedToAdvertisement")]
+    partial class CityAndCountryAddedToAdvertisement
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,10 @@ namespace Kufar.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CityId");
+
+                    b.Property<int?>("CountryId");
+
                     b.Property<string>("Description");
 
                     b.Property<string>("Photo");
@@ -35,7 +39,39 @@ namespace Kufar.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
                     b.ToTable("Advertisements");
+                });
+
+            modelBuilder.Entity("Kufar.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CountryId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("Kufar.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("Kufar.Models.User", b =>
@@ -197,6 +233,24 @@ namespace Kufar.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Kufar.Models.Advertisement", b =>
+                {
+                    b.HasOne("Kufar.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("Kufar.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+                });
+
+            modelBuilder.Entity("Kufar.Models.City", b =>
+                {
+                    b.HasOne("Kufar.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

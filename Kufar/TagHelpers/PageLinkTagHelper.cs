@@ -73,7 +73,7 @@ namespace FilterSortPagingApp.TagHelpers
             }
             else
             {
-                PageUrlValues["page"] = pageNumber;
+                PageUrlValues["pageNumber"] = pageNumber;
                 link.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
             }
 

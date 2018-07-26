@@ -1,0 +1,36 @@
+﻿@using Kufar.Models
+@using Kufar.ViewModels
+@model Kufar.ViewModels.IndexViewModel
+@addTagHelper "*, Kufar"
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+        @foreach (Advertisement u in Model.Advertisements)
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="thumbnail" style="height: 100px; width:80px">
+                                <img id="photo" style="height: 90px; width: 80px" src="@u.Photo">
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <h3 style="color:deepskyblue;">@Html.Raw(@u.Title)</h3>
+                            <span>
+                                <hr />
+                                <h5>@Html.Raw(u.Description)</h5>
+                                <hr />
+                            </span>
+                            <span>
+                                <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<page-link page-model="Model.PageViewModel" page-action="Index"></page-link>

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Kufar.Models;
+using Kufar.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
@@ -27,8 +25,10 @@ namespace Kufar
             string connectionString = "Server=GODYLA;Database=SiteKufar1;Trusted_Connection=True;";
             services.AddDbContext<AdvertisementDbContext>(options => options.UseSqlServer(connectionString));
             services.AddIdentity<User, IdentityRole>()
-        .AddEntityFrameworkStores<AdvertisementDbContext>()
-        .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<AdvertisementDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IAdvertisementsService, AdvertisementsService>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -64,7 +64,7 @@ namespace Kufar
             });
 
             // Add application services.
-            
+
 
             services.AddMvc();
         }
