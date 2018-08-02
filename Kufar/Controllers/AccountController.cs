@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Kufar.ViewModels;
 using Kufar.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kufar.Controllers
 {

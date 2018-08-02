@@ -1,48 +1,42 @@
-﻿@using Kufar.Models
+﻿
+@using Kufar.Models
+
 @using Kufar.ViewModels
+
 @model Kufar.ViewModels.IndexViewModel
 @addTagHelper "*, Kufar"
-@if (Context.User.Identity.IsAuthenticated)
-{
-    <table class="table">
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="NULL">
-                Photo
-            </a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortType="@Model.SortViewModel.SortType" asp-route-pageNumber="@Model.PageViewModel.PageNumber">Title</a>
-        </th>
-        <th>
-            <a asp-action="Index">Description</a>
-        </th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+@*SortType = sortType == SortType.Asc ? SortType.Desc : SortType.Asc;*@
 
-
-        @foreach (Advertisement u in Model.Advertisements)
-        {
-            <tr>
-                <td class="thumbnail" style="height: 100px; width: 80px">
+<table class="table">
+    <th>Photo</th>
+    <th>
+        <a asp-action="Index" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.TitleSort">Title</a>
+    </th>
+    <th>
+        <a asp-action="Index" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.DescriptionSort">Description</a>
+    </th>
+    <th>Country</th>
+    <th>City</th>
+    <th>Function</th>
+    <th>&nbsp;</th>
+    @foreach (Advertisement u in Model.Advertisements)
+    {
+        <tr>
+            <td class="thumbnail" style="height: 100px; width: 80px">
 
                 <img id="photo" style="height: 90px; width: 80px" src="@u.Photo">
-                <td>@u.Title</td>
-                <td>@u.Description</td>
-                <td>@u.Country.Name</td>
-                <td>@u.City.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
-                </td>
-            </tr>
-        }
+            <td>@u.Title</td>
+            <td>@u.Description</td>
+            <td>@u.Country.Name</td>
+            <td>@u.City.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@u.Id">Edit</a>
+                <a asp-action="Details" asp-route-id="@u.Id">Details</a>
+                <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
+            </td>
 
-    </table>
-    <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
-}
-else
-{
-    <h2>Привет</h2>
-}
+        </tr>
+    }
+
+</table>
+<page-link page-model="Model.PageViewModel" page-action="Index" page-url-sortOrder="@Model.SortViewModel.Current"></page-link>

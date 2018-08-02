@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kufar.Models;
 using Kufar.Services;
 using Kufar.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kufar.Controllers
 {
-    [Authorize]
+
     public class AdvertisementsController : Controller
     {
         private readonly AdvertisementDbContext _context;
@@ -26,83 +23,48 @@ namespace Kufar.Controllers
             _advertisementsService = advertisementsService;
         }
 
-        //[HttpPost]
-        //public IActionResult Display(Int16 i)
-        //{
-
-        //    if (i == 1)
-        //    {
-        //        return View("Index");
-        //    }
-        //    return View(viewModel);
-        //}
-//        public async Task<IActionResult> Index_old(int pageNumber = 1, SortType sortOrder = SortType.TitleAsc)
-//        {
-//            int pageSize = 10;
-//
-//            IQueryable<Advertisement> source = _context.Advertisements;
-//            
-//            ViewData["TitleSort"] = sortOrder == SortType.TitleAsc ? SortType.TitleDesc : SortType.TitleAsc;
-//            ViewData["DescriptionSort"] = sortOrder == SortType.DescriptionAsc ? SortType.DescriptionDesc : SortType.DescriptionAsc;
-//
-//            switch (sortOrder)
-//            {
-//                case SortType.TitleDesc:
-//                    source = source.OrderByDescending(s => s.Title);
-//                    break;
-//                case SortType.TitleAsc:
-//                    source = source.OrderBy(s => s.Title);
-//                    break;
-//                case SortType.DescriptionDesc:
-//                    source = source.OrderByDescending(s => s.Description);
-//                    break;
-//                case SortType.DescriptionAsc:
-//                    source = source.OrderBy(s => s.Description);
-//                    break;
-//                default:
-//                    source = source.OrderBy(s => s.Title);
-//                    break;
-//            }
-//
-//            var count = await source.CountAsync();
-//            var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-//
-//            PageViewModel pageViewModel = new PageViewModel(count, pageNumber, pageSize);
-//            IndexViewModel viewModel = new IndexViewModel
-//            {
-//                PageViewModel = pageViewModel,
-//                Advertisements = items,
-//                SortViewModel = new SortViewModel(sortOrder)
-//            };
-//            return View(viewModel);
-//        }
-
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, SortType sortType = SortType.Asc)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, SortType sortOrder = SortType.TitleAsc)
         {
-            var count = _advertisementsService.GetTotalCount();
+            
+            //var count = _advertisementsService.GetTotalCount();
+            //var result = _advertisementsService.GetAdvertisements(pageNumber, pageSize, sortType);
+            IQueryable<Advertisement> advertisements =
+                _context.Advertisements.Include(x => x.Country).Include(x => x.City);
+         
+            switch (sortOrder)
+            {
+                case SortType.TitleDesc:
+                    advertisements = advertisements.OrderByDescending(s => s.Title);
+                    break;
+                case SortType.DescriptionAsc:
+                    advertisements = advertisements.OrderBy(s => s.Description);
+                    break;
+                case SortType.DescriptionDesc:
+                    advertisements = advertisements.OrderByDescending(s => s.Description);
+                    break;
 
-            //checpn
+                default:
+                    advertisements = advertisements.OrderBy(s => s.Title);
+                    break;
+            }
+           
+           
+            var count = await advertisements.CountAsync();
+            var items = await advertisements.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            var result = _advertisementsService.GetAdvertisements(pageNumber, pageSize, sortType);
-
-            PageViewModel pageViewModel = new PageViewModel(count, pageNumber, pageSize);
             IndexViewModel viewModel = new IndexViewModel
             {
-                PageViewModel = pageViewModel,
-                SortViewModel = new SortViewModel() { SortColumn = "Title", SortType = sortType == SortType.Asc ? SortType.Desc : SortType.Asc },
-                Advertisements = result
+
+                PageViewModel = new PageViewModel(count, pageNumber, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                Advertisements = items
             };
+
 
             return View(viewModel);
         }
 
-//        protected CheckPageNumber()
-//        {
-//            if (count / pageSize < pageNumber)
-//            {
-//                pageNumber = count / pageSize;
-//            }
-//        }
+  
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -136,7 +98,17 @@ namespace Kufar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(advertisement);
+
+            ViewBag.countries = _context.Countries.ToList();
+            return View();
+        }
+
+        public JsonResult GetStateById(int id)
+        {
+            List<City> list = new List<City>();
+            list = _context.Cities.Where(a => a.Country.Id == id).ToList();
+            list.Insert(0, new City { Id = 0, Name = "Select City"});
+            return Json(new SelectList(list, "Id", "Name"));
         }
 
         public async Task<IActionResult> Edit(int? id)

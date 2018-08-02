@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Kufar.Models;
 using System.Collections.Generic;
 
-namespace FilterSortPagingApp.TagHelpers
+namespace Kufar.TagHelpers
 {
     public class PageLinkTagHelper : TagHelper
     {
@@ -21,7 +21,8 @@ namespace FilterSortPagingApp.TagHelpers
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
-        
+
+
 
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
         public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
@@ -82,6 +83,6 @@ namespace FilterSortPagingApp.TagHelpers
             item.InnerHtml.AppendHtml(link);
             return item;
         }
-     
+
     }
 }

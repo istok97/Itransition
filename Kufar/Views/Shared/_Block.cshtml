@@ -22,6 +22,16 @@
                                 <hr />
                             </span>
                             <span>
+                                <hr />
+                                <h5>@Html.Raw(u.Country.Name)</h5>
+                                <hr />
+                            </span>
+                            <span>
+                                <hr />
+                                <h5>@Html.Raw(u.City.Name)</h5>
+                                <hr />
+                            </span>
+                            <span>
                                 <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
                                 <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>

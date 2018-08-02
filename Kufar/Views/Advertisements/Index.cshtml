@@ -1,116 +1,29 @@
 ﻿@using Kufar.Models
+
 @using Kufar.ViewModels
+
 @model Kufar.ViewModels.IndexViewModel
+
 @addTagHelper "*, Kufar"
 
 @{
     ViewData["Title"] = "Сайт";
 }
-<h1>Advertisement</h1>
-@*<p>
-    <a asp-action="Create">Create New</a>
-    <div>
-        @for (Int16 i = 1; i <= 2; i++)
-        {
-            <form style="display:inline" action="/Advertisements/Display" method="POST">
-                <input type="submit" class="submity" value="@i" />
 
-            </form>
-        }
-       
-    </div>*@
+<br />
+
+@Html.DropDownList("test",
+    new List<SelectListItem>()
+    {
+        new SelectListItem(){Text = "text 1", Value = "1"},
+        new SelectListItem(){Text = "text 2", Value = "2"}
+    })
 
 
+<a asp-action="Create">Create New</a>
 @{Html.RenderPartial("_List");}
-
-@*<table class="table">
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="NULL">
-                Photo
-            </a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.TitleSort)">Title</a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DescriptionSort)">Description</a>
-        </th>
-
-        </tr>
-        @foreach (Advertisement u in Model.Advertisements)
-        {
-            <tr>
-                <td class="thumbnail" style="height: 100px; width:80px">
-
-                    <img id="photo" style="height: 90px; width: 80px" src="@u.Photo">
-                <td>@u.Title</td>
-                <td>@u.Description</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
-                </td>
-            </tr>
-        }
-
-    </table>*@
-
-
-
-@*<div class="row">
-        <div class="col-md-8 col-sm-8">
-            @foreach (Advertisement u in Model.Advertisements)
-            {
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="thumbnail" style="height: 100px; width:80px">
-                                    <img id="photo" style="height: 90px; width: 80px" src="@u.Photo">
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <h3 style="color:deepskyblue;">@Html.Raw(@u.Title)</h3>
-                                <span>
-                                    <hr />
-                                    <h5>@Html.Raw(u.Description)</h5>
-                                    <hr />
-                                </span>
-                                <span>
-                                    <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>*@
-
-
-@*<pageNumber-link pageNumber-model="Model.PageViewModel" pageNumber-action="Index"></pageNumber-link>*@
-
-<input id="button" type="submit" name="button" onclick="myFunction();" value="enter" />
-
-@*<script>
-        function myFunction() {
-
-
-
-        };
-
-    </script>*@
 @{
     ViewData["Title"] = "Home Page";
 }
 
-
-
-@*<td>
-        <a asp-action="Edit" asp-route-id="@u.Id">Edit</a> |
-        <a asp-action="Details" asp-route-id="@u.Id">Details</a> |
-        <a asp-action="Delete" asp-route-id="@u.Id">Delete</a>
-    </td>*@
 

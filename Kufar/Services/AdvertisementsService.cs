@@ -19,13 +19,16 @@ namespace Kufar.Services
             var items = _context.Advertisements
                 .Include(adv => adv.City)
                 .Include(adv => adv.Country)
-
                 .OrderBy(adv => adv.Title);
 
-            if (sortType == SortType.Desc)
-            {
-                items = items.OrderByDescending(adv => adv.Title);
-            }
+
+            //if (sortType == SortType.Desc)
+            //{
+            //    items = items.OrderByDescending(adv => adv.Title);
+            //}
+            
+
+
 
             var paged = items.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 

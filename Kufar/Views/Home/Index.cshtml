@@ -1,18 +1,25 @@
-﻿@model Kufar.Models.CountryModel
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<br>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+﻿<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+    <title>Document</title> 
+</head> 
+<body> 
+<div id="test">A-Z</div> 
+<a href="javascript:reverseDiv();">Твоя ссылка</a> 
 
-@using (Html.BeginForm())
-{
-    @Html.DropDownListFor(m => m.StateModel, new SelectList(Model.StateModel, "Id", "StateName"), new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })
-    <br />
-    <br />
-    <select id="ddlcity" name="ddlcity" style="width: 200px"></select>
 
-    <br /><br />
-}
+<script type="text/javascript"> 
+
+    var test = document.getElementById("test"); 
+
+
+    function reverseDiv() { 
+        test.innerHTML = document.getElementById("test").innerHTML.split("").reverse().join(""); 
+    } 
+
+</script> 
+</body> 
+</html>

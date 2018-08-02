@@ -3,11 +3,11 @@
 function GetCity(_stateId) {
     var procemessage = "<option value='0'> Please wait...</option>";
     $("#ddlcity").html(procemessage).show();
-    var url = "/Home/GetCityByStaeId/";
+    var url = "/Home/GetCityByCountryId/";
 
     $.ajax({
         url: url,
-        data: { stateid: _stateId },
+        data: { countryid: countryid },
         cache: false,
         type: "POST",
         success: function (data) {

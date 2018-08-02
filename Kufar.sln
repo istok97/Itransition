@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kufar", "Kufar\Kufar.csproj", "{2EE17956-CE63-427D-8825-FC9D8E22CB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestApp.Tests", "UnitTestApp.Tests\UnitTestApp.Tests.csproj", "{7CC21C27-236F-4FD2-AD35-358FA563041C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestKufar.Tests", "UnitTestKufar\UnitTestKufar.Tests.csproj", "{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{2EE17956-CE63-427D-8825-FC9D8E22CB18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE17956-CE63-427D-8825-FC9D8E22CB18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE17956-CE63-427D-8825-FC9D8E22CB18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CC21C27-236F-4FD2-AD35-358FA563041C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CC21C27-236F-4FD2-AD35-358FA563041C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CC21C27-236F-4FD2-AD35-358FA563041C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CC21C27-236F-4FD2-AD35-358FA563041C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

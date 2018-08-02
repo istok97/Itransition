@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Kufar.Models
 {
     public class SortViewModel
     {
-        public SortType SortType { get; set; }
+        public SortType TitleSort { get; set; } 
+        public SortType DescriptionSort { get; set; }
+        public SortType Current{ get; set; }
 
-        public string SortColumn { get; set; }
+        public SortViewModel(SortType sortOrder)
+        {
+            TitleSort = sortOrder == SortType.TitleAsc ? SortType.TitleDesc : SortType.TitleAsc;
+            DescriptionSort = sortOrder == SortType.DescriptionAsc ? SortType.DescriptionDesc : SortType.DescriptionAsc;
+            Current = sortOrder;
+        }
     }
-}
+
+} 
