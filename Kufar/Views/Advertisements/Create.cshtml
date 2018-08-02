@@ -1,11 +1,11 @@
-﻿@model Kufar.Models.Country
+﻿@model Kufar.Models.Advertisement
 
 
 <h2>Create</h2>
 <h4>Advertisement</h4>
 <hr />
 <div class="row">
-    @*<div class="col-md-4">
+    <div class="col-md-4">
         <div class="thumbnail" style="height: 160px; width:160px">
             <img id="photo" style="height: 150px; width: 150px" src="http://res.cloudinary.com/dr5gmgpmp/image/upload/v1527502379/empty_avatar.jpg" />
         </div>
@@ -15,53 +15,53 @@
         <script src="~/js/photo.js" type="text/javascript"></script>
     </div>
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden="hidden">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" id="inPhoto" value="http://res.cloudinary.com/dr5gmgpmp/image/upload/v1527502379/empty_avatar.jpg" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>*@
-            
-            <select id="Countryid" name="Countrylist" asp-for="Id" asp-items="@(new SelectList(ViewBag.countries, "Id", "Name"))">
-                <option>Select Country name</option>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group" hidden="hidden">
+            <label asp-for="Photo" class="control-label"></label>
+            <input asp-for="Photo" class="form-control" id="inPhoto" value="http://res.cloudinary.com/dr5gmgpmp/image/upload/v1527502379/empty_avatar.jpg" />
+            <span asp-validation-for="Photo" class="text-danger"></span>
+        </div>
+        <select id="Countryid" name="Countrylist" asp-for="Id" asp-items="@(new SelectList(ViewBag.countries, "Id", "Name"))">
+                <option>Select Country</option>
             </select>
-            <select id="stateid" name="statelist" asp-for="Id" asp-items="@(new SelectList(string.Empty, "Id", "Name"))"></select>
-            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-            <script>
-                $(function() {
-                    $("#Countryid").change(function() {
-                        var url = '@Url.Content("~/")' + "Advertisements/GetStateById";
-                        var ddlsource = "#Countryid";
-                        $.getJSON(url, { id: $(ddlsource).val() }, function(data) {
-                                var items = '';
-                                $("#stateid").empty();
-                                $.each(data,function(i, row) {
-                                        items += "option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#stateid").html(items);
-                            })
-
+        <select id="stateid" name="_list" asp-for="Id" asp-items="@(new SelectList(string.Empty, "Id", "Name"))">
+        </select>
+           
+        <script>
+            $(function() {
+                $("#Countryid").change(function() {
+                    var url = '@Url.Content("~/")' + "Advertisements/GetStateById";
+                    var ddlsource = "#Countryid";
+                    $.getJSON(url, { id: $(ddlsource).val() }, function (data) {
+                        var items = '';
+                        $("#stateid").empty();
+                        $.each(data,function(i, row) {
+                            items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                        });
+                        $("#stateid").html(items);
                     });
+
                 });
-            </script>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            });
+        </script>
+      
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
 
-            <div>
-                <a asp-action="Index">Back to List</a>
-            </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
-
+</div>

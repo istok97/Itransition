@@ -16,6 +16,7 @@ namespace Kufar.Controllers
         private readonly AdvertisementDbContext _context;
 
         private readonly IAdvertisementsService _advertisementsService;
+        private List<City> _list;
 
         public AdvertisementsController(AdvertisementDbContext context, IAdvertisementsService advertisementsService)
         {
@@ -85,12 +86,13 @@ namespace Kufar.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.countries = _context.Countries.ToList();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Photo")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Photo, CityId, CountryId")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
@@ -99,16 +101,16 @@ namespace Kufar.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.countries = _context.Countries.ToList();
-            return View();
+            
+            return View(advertisement);
         }
 
         public JsonResult GetStateById(int id)
         {
-            List<City> list = new List<City>();
-            list = _context.Cities.Where(a => a.Country.Id == id).ToList();
-            list.Insert(0, new City { Id = 0, Name = "Select City"});
-            return Json(new SelectList(list, "Id", "Name"));
+           
+            _list = _context.Cities.Where(a => a.Country.Id == id).ToList();
+            _list.Insert(0, new City  { Id = 0, Name = "Select City"});
+            return Json(new SelectList(_list, "Id", "Name"));
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -128,7 +130,7 @@ namespace Kufar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Photo")] Advertisement advertisement)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Photo, CityId, CountryId")] Advertisement advertisement)
         {
             if (id != advertisement.Id)
             {
