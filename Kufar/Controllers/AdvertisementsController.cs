@@ -92,17 +92,28 @@ namespace Kufar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Photo, CityId, CountryId")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("Id, Title, Description, Photo, CountryId, CityId")] AdvertisementViewModel advertisementViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(advertisement);
+                var adv4 = new Advertisement
+                {
+                    Id = advertisementViewModel.Id,
+                    Title = advertisementViewModel.Title,
+                    Description = advertisementViewModel.Description,
+                    Photo = advertisementViewModel.Photo,
+                    Country = _context.Countries.SingleOrDefault(x => x.Id == advertisementViewModel.CountryId),
+                    City = _context.Cities.SingleOrDefault(x => x.Id == advertisementViewModel.CityId)
+                };
+
+                //
+                _context.Add(adv4);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
             
-            return View(advertisement);
+            return View(advertisementViewModel);
         }
 
         public JsonResult GetStateById(int id)

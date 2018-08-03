@@ -11,7 +11,6 @@ namespace Kufar.Models
 
         public string Description { get; set; }
 
-
         public string Photo { get; set; }
 
         public Country Country { get; set; }
