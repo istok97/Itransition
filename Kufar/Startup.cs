@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,9 @@ using Kufar.Models;
 using Kufar.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace Kufar
 {
@@ -26,7 +30,7 @@ namespace Kufar
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AdvertisementDbContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddTransient<IAdvertisementsService, AdvertisementsService>();
 
             services.Configure<IdentityOptions>(options =>
@@ -51,12 +55,28 @@ namespace Kufar
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
-
-            services.AddMvc();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddMvc()
+                .AddDataAnnotationsLocalization()
+                .AddViewLocalization();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru")
+                };
+                options.DefaultRequestCulture = new RequestCulture("ru");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDeveloperExceptionPage();
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -66,7 +86,8 @@ namespace Kufar
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+           
+            
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>

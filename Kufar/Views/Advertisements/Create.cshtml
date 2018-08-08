@@ -40,10 +40,12 @@
                 <select id="Countryid" name="CountryId" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.countries, "Id", "Name"))" class="form-control">
                     <option>Select Country</option>
                 </select>
+                <span asp-validation-for="CountryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>City</label>
                 <select id="stateid" name="CityId" asp-for="CityId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="CityId" class="text-danger"></span>
             </div>
         <script>
             $(function() {

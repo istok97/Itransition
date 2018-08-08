@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Kufar.Models;
 using Kufar.Services;
 using Kufar.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kufar.Controllers
@@ -24,14 +28,23 @@ namespace Kufar.Controllers
             _advertisementsService = advertisementsService;
         }
 
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
+        }
+
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, SortType sortOrder = SortType.TitleAsc)
         {
-            
-            //var count = _advertisementsService.GetTotalCount();
-            //var result = _advertisementsService.GetAdvertisements(pageNumber, pageSize, sortType);
             IQueryable<Advertisement> advertisements =
                 _context.Advertisements.Include(x => x.Country).Include(x => x.City);
-         
+
             switch (sortOrder)
             {
                 case SortType.TitleDesc:
@@ -48,8 +61,8 @@ namespace Kufar.Controllers
                     advertisements = advertisements.OrderBy(s => s.Title);
                     break;
             }
-           
-           
+
+
             var count = await advertisements.CountAsync();
             var items = await advertisements.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
@@ -65,7 +78,7 @@ namespace Kufar.Controllers
             return View(viewModel);
         }
 
-  
+
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -94,6 +107,7 @@ namespace Kufar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id, Title, Description, Photo, CountryId, CityId")] AdvertisementViewModel advertisementViewModel)
         {
+
             if (ModelState.IsValid)
             {
                 var adv4 = new Advertisement
@@ -112,52 +126,67 @@ namespace Kufar.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            
+            ViewBag.countries = _context.Countries.ToList();
             return View(advertisementViewModel);
         }
 
         public JsonResult GetStateById(int id)
         {
-           
+
             _list = _context.Cities.Where(a => a.Country.Id == id).ToList();
-            _list.Insert(0, new City  { Id = 0, Name = "Select City"});
+            _list.Insert(0, new City { Id = 0, Name = "Select City" });
             return Json(new SelectList(_list, "Id", "Name"));
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var advertisement = await _context.Advertisements.SingleOrDefaultAsync(m => m.Id == id);
-            if (advertisement == null)
+            //}
+            Advertisement editadAdvertisement = _context.Advertisements.Find(id);
+            AdvertisementViewModel model = new AdvertisementViewModel()
             {
-                return NotFound();
-            }
-            return View(advertisement);
+                Id = editadAdvertisement.Id,
+                Title = editadAdvertisement.Title,
+                Description = editadAdvertisement.Description,
+                Photo = editadAdvertisement.Photo,
+                CityId = editadAdvertisement.City?.Id ?? 0,
+                CountryId = editadAdvertisement.Country?.Id ?? 0
+            };
+            ViewBag.countries = _context.Countries.ToList();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Photo, CityId, CountryId")] Advertisement advertisement)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Photo, CountryId, CityId")] AdvertisementViewModel advertisementViewModel)
         {
-            if (id != advertisement.Id)
+            if (id != advertisementViewModel.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var adv4 = new Advertisement
+                {
+                    Id = advertisementViewModel.Id,
+                    Title = advertisementViewModel.Title,
+                    Description = advertisementViewModel.Description,
+                    Photo = advertisementViewModel.Photo,
+                    Country = _context.Countries.SingleOrDefault(x => x.Id == advertisementViewModel.CountryId),
+                    City = _context.Cities.SingleOrDefault(x => x.Id == advertisementViewModel.CityId)
+                };
                 try
                 {
-                    _context.Update(advertisement);
+                    _context.Update(adv4);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdvertisementExists(advertisement.Id))
+                    if (!AdvertisementExists(adv4.Id))
                     {
                         return NotFound();
                     }
@@ -168,7 +197,7 @@ namespace Kufar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(advertisement);
+            return View(advertisementViewModel);
         }
 
         public async Task<IActionResult> Delete(int? id)

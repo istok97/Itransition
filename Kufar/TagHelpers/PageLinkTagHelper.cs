@@ -64,7 +64,7 @@ namespace Kufar.TagHelpers
             output.Content.AppendHtml(tag);
         }
 
-        TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
+        private TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
         {
             TagBuilder item = new TagBuilder("li");
             TagBuilder link = new TagBuilder("a");

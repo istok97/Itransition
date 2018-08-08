@@ -11,17 +11,13 @@ namespace Kufar.ViewModels
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "incorrect information")]
-
-
         public string Title { get; set; }
-
         public string Description { get; set; }
-
-
         public string Photo { get; set; }
 
+        [Required(ErrorMessage = "Required!")]
         public int CountryId { get; set; }
-
+        [Required(ErrorMessage = "Required!")]
         public int CityId { get; set; }
     }
 }

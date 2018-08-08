@@ -1,24 +1,20 @@
-﻿@using Kufar.Models
-
-@using Kufar.ViewModels
-
-@model Kufar.ViewModels.IndexViewModel
-
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @addTagHelper "*, Kufar"
 
 @{
-    ViewData["Title"] = "Сайт";
+    <h1>@ViewData["Title"]</h1>
 }
 
 <br />
+<div class="container body-content">
+<div>
+    @await Html.PartialAsync("_SelectLanguagePartial")
+</div>
+</div>
 
-@Html.DropDownList("test",
-    new List<SelectListItem>()
-    {
-        new SelectListItem(){Text = "text 1", Value = "1"},
-        new SelectListItem(){Text = "text 2", Value = "2"}
-    })
 
+<h3>@Localizer["Message"]</h3>
 
 <a asp-action="Create">Create New</a>
 @{ Html.RenderPartial("_List");}
