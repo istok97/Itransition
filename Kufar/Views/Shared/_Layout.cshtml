@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <title>@ViewData["Title"] - Kufar</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -32,6 +31,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Advertisements" asp-action="Index">Advertisements</a></li>
+                    <li><a asp-area="" asp-controller="Countries" asp-action="Index">Add country</a></li>
+                    <li><a asp-area="" asp-controller="Cities" asp-action="Index">Add city</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="Index">User list</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

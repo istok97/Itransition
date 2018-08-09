@@ -17,6 +17,7 @@ namespace Kufar.ViewModels
 
         [Required(ErrorMessage = "Required!")]
         public int CountryId { get; set; }
+
         [Required(ErrorMessage = "Required!")]
         public int CityId { get; set; }
     }

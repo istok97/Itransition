@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kufar", "Kufar\Kufar.csproj", "{2EE17956-CE63-427D-8825-FC9D8E22CB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestKufar.Tests", "UnitTestKufar\UnitTestKufar.Tests.csproj", "{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestKufar.Tests", "UnitTestKufar\UnitTestKufar.Tests.csproj", "{C6E75D2F-15C7-4F01-AEB6-F34365F65B75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

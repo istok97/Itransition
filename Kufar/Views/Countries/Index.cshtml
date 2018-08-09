@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Kufar.Models.Country>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div id="modal-placeholder"></div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("Create")">
+    Add Country 
+</button>
+<script>
+    $(function () {
+        var placeholderElement = $('#modal-placeholder');
+
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+            var url = $(this).data('url');
+            $.get(url).done(function (data) {
+                placeholderElement.html(data);
+                placeholderElement.find('.modal').modal('show');
+            });
+        });
+
+        placeholderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+            var dataToSend = form.serialize();
+
+            $.post(actionUrl, dataToSend).done(function (data) {
+                var newBody = $('.modal-body', data);
+                placeholderElement.find('.modal-body').replaceWith(newBody);
+
+                var isValid = newBody.find('[name="IsValid"]').val() === 'true';
+                if (isValid) {
+                    placeholderElement.find('.modal').modal('hide');
+                }
+            });
+        });
+    });
+</script>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "CreateCity", 
+                        new { id = item.Id }, new { @class = "compItem" })
+                </td>
+                <td>
+
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+ 
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+ 
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}
