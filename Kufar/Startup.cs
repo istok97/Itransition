@@ -66,7 +66,9 @@ namespace Kufar
                     new CultureInfo("en"),
                     new CultureInfo("ru")
                 };
+                
                 options.DefaultRequestCulture = new RequestCulture("ru");
+                
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });

@@ -1,8 +1,9 @@
-﻿@model Kufar.ViewModels.RegisterViewModel
+﻿@using Kufar.Models.Enums
+@model Kufar.ViewModels.RegisterViewModel
 <h2>Registration</h2>
 
 <form method="post" asp-controller="Account" asp-action="Register">
-    <div asp-validation-summary="ModelOnly" ></div>
+    <div asp-validation-summary="ModelOnly"></div>
     <div>
         <label asp-for="Email"></label><br />
         <input asp-for="Email" />
@@ -22,6 +23,11 @@
         <label asp-for="PasswordConfirm"></label><br />
         <input asp-for="PasswordConfirm" />
         <span asp-validation-for="PasswordConfirm"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Localization"></label><br />
+        <select asp-for="Localization" asp-items="Html.GetEnumSelectList<Localization>()"></select>
+        <span asp-validation-for="Localization"></span>
     </div>
     <div>
         <br>

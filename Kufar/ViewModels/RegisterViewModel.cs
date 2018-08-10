@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kufar.Models.Enums;
 
 namespace Kufar.ViewModels
 {
@@ -23,5 +24,8 @@ namespace Kufar.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         public string PasswordConfirm { get; set; }
+
+        [Required]
+        public Localization Localization { get; set; }
     }
 }

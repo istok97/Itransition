@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kufar.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace Kufar.Models
@@ -8,5 +9,7 @@ namespace Kufar.Models
         [Required]
         [Display(Name = "Year")]
         public int Year { get; set; }
+        [Required]
+        public Localization Localization { get; set; }
     }
 }

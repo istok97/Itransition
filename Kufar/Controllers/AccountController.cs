@@ -72,7 +72,7 @@ namespace Kufar.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year.Value };
+                User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year.Value, Localization = model.Localization};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
