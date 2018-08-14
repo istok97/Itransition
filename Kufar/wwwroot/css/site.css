@@ -49,3 +49,11 @@
 .row {
     overflow: hidden;
 }
+.footer {
+    position: fixed; 
+    left: 0; bottom: 0;
+    padding: 10px;
+    background: #333;
+    color: #fff; 
+    width: 100%; 
+}

@@ -9,7 +9,7 @@ namespace Kufar.Models
         [Required]
         [Display(Name = "Year")]
         public int Year { get; set; }
-        [Required]
-        public Localization Localization { get; set; }
+        
+       
     }
 }

@@ -25,7 +25,6 @@ namespace Kufar.ViewModels
         [Display(Name = "Confirm password")]
         public string PasswordConfirm { get; set; }
 
-        [Required]
-        public Localization Localization { get; set; }
+      
     }
 }

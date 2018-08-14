@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kufar.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Kufar.Controllers
 {
+    [Authorize]
     public class CountriesController : Controller
     {
         private readonly AdvertisementDbContext _context;
@@ -18,21 +21,24 @@ namespace Kufar.Controllers
             _context = context;
         }
 
-        // GET: Countries
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Countries.ToListAsync());
         }
-      
+        [Authorize]
         public IActionResult Create()
         {
             return PartialView();
         }
+
+        [Authorize]
         public IActionResult CreatCity(int id)
         {
             return PartialView("CreateCity");
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Country country)
@@ -41,11 +47,14 @@ namespace Kufar.Controllers
             {
                 _context.Add(country);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Countries");
+
             }
+
             return View(country);
         }
-       
+
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -60,10 +69,10 @@ namespace Kufar.Controllers
                 return NotFound();
             }
 
-            return View(country);
+            return PartialView(country);
         }
 
-        // POST: Countries/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -74,9 +83,12 @@ namespace Kufar.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CountryExists(int id)
+        [Authorize]
+        public async Task<JsonResult> Countries()
         {
-            return _context.Countries.Any(e => e.Id == id);
+            var countries = await _context.Countries.ToListAsync();
+            return Json(countries);
         }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kufar.Models;
+using Kufar.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 namespace Kufar.Controllers
@@ -15,11 +16,22 @@ namespace Kufar.Controllers
         {
             _userManager = userManager;
         }
+
         public ViewResult Index()
         {
             ViewBag.userManager = _userManager;
             return View(_userManager.Users.ToList());
         }
-
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var model = new UserViewModel
+            {
+                Email = user.Email,
+                Year = user.Year
+            };
+            return View(model);
+        }
     }
 }

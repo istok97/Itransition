@@ -11,7 +11,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <p class="navbar-text">Hello, <b>@Context.User.Identity.Name</b></p>
+                    <a asp-controller="User" asp-action="Profile" >Profile</a>
                 </li>
                 <li>
                     <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>

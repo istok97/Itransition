@@ -4,16 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<br />
 <div id="modal-placeholder"></div>
 
-<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#add-contact" data-url="@Url.Action("Create")">
-    Add Country 
+    Add Country
 </button>
 <script>
     $(function () {
@@ -40,44 +35,77 @@
                 var isNotValid = newBody.find('[name="IsValid"]').val() === 'False';
                 if (!isNotValid) {
                     placeholderElement.find('.modal').modal('hide');
+                    //$.ajax({
+                    //    type: "GET",
+                    //    url: "Countries/Countries",
+                    //    success: function (response) {
+                    //        $("#tbody").text("");
+                    //        for (var i = 0; i < response.length; i++) {
+                    //            $("#tbody").append("<tr>"
+                    //                + "<td>" + response[i].name + "</td>"
+                    //                + "<td>"
+                    //                + "<ul>"
+                    //                + "<li>"
+                    //                + "<a class=\"compItem\" href=\"/Countries/Delete/" + response[i].id + "\">Delete</a>"
+                    //                + "</li>"
+                    //                + "</ul>"
+                    //                + "</td>"
+                    //                + "</tr>"
+                    //            );
+                    //        }
+                    //    }
+                    //});
                 }
             });
         });
     });
 </script>
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+
+    </tr>
     </thead>
-    <tbody>
+   
+    <tbody id="tbody">
+        
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.Name, "CreateCity", 
-                        new { id = item.Id }, new { @class = "compItem" })
+                    @item.Name
                 </td>
                 <td>
 
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <ul>
+
+                        <li>
+                            @Html.ActionLink("Delete", "Delete",
+                                new {id = item.Id}, new {@class = "country"})
+                        </li>
+                    </ul>
                 </td>
+
             </tr>
         }
     </tbody>
+
 </table>
+
 @section scripts
-{
+    {
     <script type="text/javascript">
- 
+
         $(function () {
             $.ajaxSetup({ cache: false });
-            $(".compItem").click(function (e) {
- 
+            $(".country").click(function (e) {
+
                 e.preventDefault();
                 $.get(this.href, function (data) {
                     $('#dialogContent').html(data);

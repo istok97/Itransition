@@ -100,7 +100,7 @@ namespace Kufar.Controllers
         public IActionResult Create()
         {
             ViewBag.countries = _context.Countries.ToList();
-            return View();
+            return View("Create");
         }
 
         [HttpPost]

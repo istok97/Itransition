@@ -28,21 +28,31 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Kufar</a>
             </div>
+       
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                @if (Context.User.Identity.IsAuthenticated)
+                {
                     <li><a asp-area="" asp-controller="Advertisements" asp-action="Index">Advertisements</a></li>
                     <li><a asp-area="" asp-controller="Countries" asp-action="Index">Add country</a></li>
                     <li><a asp-area="" asp-controller="Cities" asp-action="Index">Add city</a></li>
                     <li><a asp-area="" asp-controller="User" asp-action="Index">User list</a></li>
+                }
                 </ul>
-                @await Html.PartialAsync("_LoginPartial")
+             
+                    @await Html.PartialAsync("_LoginPartial")
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                @await Html.PartialAsync("_SelectLanguagePartial")
+            }
             </div>
+        
         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+        
+        <footer class="footer">
             <p>&copy; 2018 - Kufar</p>
         </footer>
     </div>

@@ -5,21 +5,8 @@
 @{
     <h1>@ViewData["Title"]</h1>
 }
-
-<br />
-<div class="container body-content">
-<div>
-    @await Html.PartialAsync("_SelectLanguagePartial")
-</div>
-</div>
-
-
-<h3>@Localizer["Message"]</h3>
-
-<a asp-action="Create">Create New</a>
-@{ Html.RenderPartial("_List");}
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-
+<a asp-action="Create" class="btn btn-primary">Create New</a>
+    @{ Html.RenderPartial("_List");}
+    @{
+        ViewData["Title"] = "Home Page";
+    }
