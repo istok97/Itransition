@@ -33,14 +33,13 @@
             </div>
             <div class="form-group">
                 <label>Country</label>
-                <select id="Countryid" name="CountryId" asp-for="CountryId" asp-items="@(new SelectList(ViewBag.countries, "Id", "Name"))" class="form-control">
-                    <option>@Model.Title</option>
+                <select id="Countryid" name="CountryId" asp-for="CountryId" asp-items="@(ViewBag.countries)" class="form-control">
                 </select>
                 <span asp-validation-for="CityId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>City</label>
-                <select id="stateid" name="CityId" asp-for="CityId" asp-items="@(new SelectList(string.Empty, "Id", "Name"))" class="form-control">
+                <select id="stateid" name="CityId" asp-for="CityId" asp-items="@(ViewBag.cities)" class="form-control">
                 </select>
                 <span asp-validation-for="CityId" class="text-danger"></span>
             </div>

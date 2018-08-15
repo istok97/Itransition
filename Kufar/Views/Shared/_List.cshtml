@@ -1,9 +1,4 @@
-﻿
-@using Kufar.Models
-
-@using Kufar.ViewModels
-
-@model Kufar.ViewModels.IndexViewModel
+﻿@model Kufar.ViewModels.IndexViewModel
 @addTagHelper "*, Kufar"
 <table class="table">
     <th>Photo</th>
@@ -24,7 +19,7 @@
 
                 <img id="photo" style="height: 90px; width: 80px" src="@u.Photo">
             <td>@u.Title</td>
-            <td>@u.Description</td>
+            <td>@u.Description @Html.Raw(u.Description)</td>
             <td>@u.Country.Name</td>
             <td>@u.City.Name</td>
             <td>

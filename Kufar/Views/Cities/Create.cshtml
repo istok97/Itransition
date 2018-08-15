@@ -1,20 +1,34 @@
-﻿@model Kufar.Models.City
-
+﻿@using Kufar.ViewModels
+@model Kufar.ViewModels.CitiesViewModel
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
 
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                @*<label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>*@
+                <h3>Country</h3>
+                <label>@Model.SelectedCountry.Name</label>
+            </div>
+            <div class="form-group">
+                @foreach (City u in Model.Cities)
+                {
+                    <tr>
+                        <td>
+                            <td>@u.Name</td>
+                   
+                        </td>
+                        
+
+                    </tr>
+                }
+               
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -26,4 +40,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

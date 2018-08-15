@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Kufar.Models;
 using Kufar.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 namespace Kufar.Controllers
@@ -17,11 +18,14 @@ namespace Kufar.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public ViewResult Index()
         {
             ViewBag.userManager = _userManager;
             return View(_userManager.Users.ToList());
         }
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Profile()
         {

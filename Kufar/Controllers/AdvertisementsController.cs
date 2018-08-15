@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Kufar.Models;
 using Kufar.Services;
 using Kufar.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,6 +29,7 @@ namespace Kufar.Controllers
             _advertisementsService = advertisementsService;
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
@@ -40,6 +42,7 @@ namespace Kufar.Controllers
             return LocalRedirect(returnUrl);
         }
 
+        [Authorize]
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, SortType sortOrder = SortType.TitleAsc)
         {
             IQueryable<Advertisement> advertisements =
@@ -78,8 +81,7 @@ namespace Kufar.Controllers
             return View(viewModel);
         }
 
-
-
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -103,6 +105,7 @@ namespace Kufar.Controllers
             return View("Create");
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id, Title, Description, Photo, CountryId, CityId")] AdvertisementViewModel advertisementViewModel)
@@ -130,6 +133,7 @@ namespace Kufar.Controllers
             return View(advertisementViewModel);
         }
 
+        [Authorize]
         public JsonResult GetStateById(int id)
         {
 
@@ -138,6 +142,7 @@ namespace Kufar.Controllers
             return Json(new SelectList(_list, "Id", "Name"));
         }
 
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -155,10 +160,14 @@ namespace Kufar.Controllers
                 CityId = editadAdvertisement.City?.Id ?? 0,
                 CountryId = editadAdvertisement.Country?.Id ?? 0
             };
-            ViewBag.countries = _context.Countries.ToList();
+
+            ViewBag.countries = _context.Countries.Select(t => new SelectListItem {Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CountryId});
+            ViewBag.cities = _context.Cities.Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CityId });
+
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Photo, CountryId, CityId")] AdvertisementViewModel advertisementViewModel)
@@ -200,6 +209,7 @@ namespace Kufar.Controllers
             return View(advertisementViewModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -217,6 +227,7 @@ namespace Kufar.Controllers
             return View(advertisement);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -227,6 +238,7 @@ namespace Kufar.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         private bool AdvertisementExists(int id)
         {
             return _context.Advertisements.Any(e => e.Id == id);

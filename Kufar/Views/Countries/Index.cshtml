@@ -79,7 +79,8 @@
         {
             <tr>
                 <td>
-                    @item.Name
+                    <a asp-controller="Cities" asp-action="Create"  asp-route-id="@item.Id" >@item.Name</a>
+                   
                 </td>
                 <td>
 
