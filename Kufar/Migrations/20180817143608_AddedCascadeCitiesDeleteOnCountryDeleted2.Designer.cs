@@ -11,9 +11,10 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    partial class AdvertisementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180817143608_AddedCascadeCitiesDeleteOnCountryDeleted2")]
+    partial class AddedCascadeCitiesDeleteOnCountryDeleted2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

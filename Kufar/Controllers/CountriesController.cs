@@ -78,6 +78,7 @@ namespace Kufar.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == id);
+            
             _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

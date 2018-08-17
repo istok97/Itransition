@@ -11,9 +11,10 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    partial class AdvertisementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180816110705_NullIdCountry")]
+    partial class NullIdCountry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,22 +241,19 @@ namespace Kufar.Migrations
             modelBuilder.Entity("Kufar.Models.Advertisement", b =>
                 {
                     b.HasOne("Kufar.Models.City", "City")
-                        .WithMany("Advertisements")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("CityId");
 
                     b.HasOne("Kufar.Models.Country", "Country")
-                        .WithMany("Advertisements")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Kufar.Models.City", b =>
                 {
                     b.HasOne("Kufar.Models.Country", "Country")
-                        .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

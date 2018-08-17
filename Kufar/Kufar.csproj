@@ -5,6 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180816133332_CascadeDeleteCity.cs" />
+    <Compile Remove="Migrations\20180816133332_CascadeDeleteCity.Designer.cs" />
+    <Compile Remove="Migrations\20180816143239_CascadeDeleteCityNotSetNullCityIdAndCountryId.cs" />
+    <Compile Remove="Migrations\20180816143239_CascadeDeleteCityNotSetNullCityIdAndCountryId.Designer.cs" />
+    <Compile Remove="Migrations\20180816160432_Initiall.cs" />
+    <Compile Remove="Migrations\20180816160432_Initiall.Designer.cs" />
+    <Compile Remove="Migrations\20180817105751_RelationWithMany.cs" />
+    <Compile Remove="Migrations\20180817105751_RelationWithMany.Designer.cs" />
+    <Compile Remove="Migrations\20180817113924_RelationWithOnetoMany.cs" />
+    <Compile Remove="Migrations\20180817113924_RelationWithOnetoMany.Designer.cs" />
+    <Compile Remove="Migrations\20180817125418_Cascade.cs" />
+    <Compile Remove="Migrations\20180817125418_Cascade.Designer.cs" />
+    <Compile Remove="Migrations\20180817130915_Cascade1.cs" />
+    <Compile Remove="Migrations\20180817130915_Cascade1.Designer.cs" />
+    <Compile Remove="Migrations\20180817131225_Cascade3.cs" />
+    <Compile Remove="Migrations\20180817131225_Cascade3.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
