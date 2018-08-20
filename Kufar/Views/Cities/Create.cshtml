@@ -10,25 +10,28 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                @*<label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>*@
-                <h3>Country</h3>
-                <label>@Model.SelectedCountry.Name</label>
+       <h3>Create City</h3>
+                <label>Selected country: @Model.SelectedCountry?.Name</label>
             </div>
             <div class="form-group">
+                <label>Current cities</label>
                 @foreach (City u in Model.Cities)
                 {
+                <table>
                     <tr>
-                        <td>
-                        <td>@u.Name</td>
-
-                        </td>
-
-
+                    <td>@u.Name</td>
                     </tr>
-                }
+                </table>
 
+
+                    
+                }
+                </br>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -38,5 +41,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Countries" asp-action="Index">Back</a>
 </div>

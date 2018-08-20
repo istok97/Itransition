@@ -36,21 +36,20 @@ namespace Kufar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Name, CountryId")] CitiesViewModel citiesViewModel)
+        public async Task<IActionResult> Create([Bind("Id, Name")] CitiesViewModel citiesViewModel)
         {
             if (ModelState.IsValid)
             {
                 var cities = new City
                 {
-                    Id = citiesViewModel.Id,
                     Name = citiesViewModel.Name,
-                    Country = _context.Countries.SingleOrDefault(x => x.Id == citiesViewModel.CountryId),
+                    Country = _context.Countries.SingleOrDefault(x => x.Id == citiesViewModel.Id)
                 };
                 _context.Add(cities);
                 await _context.SaveChangesAsync();
-                return View("Create");
+                return RedirectToAction("Index", "Countries");
             }
-            return View("Create");
+            return RedirectToAction("Create", "Cities");
         }
       
 
