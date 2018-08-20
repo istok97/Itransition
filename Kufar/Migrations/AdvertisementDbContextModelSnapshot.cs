@@ -240,18 +240,18 @@ namespace Kufar.Migrations
             modelBuilder.Entity("Kufar.Models.Advertisement", b =>
                 {
                     b.HasOne("Kufar.Models.City", "City")
-                        .WithMany("Advertisements")
+                        .WithMany()
                         .HasForeignKey("CityId");
 
                     b.HasOne("Kufar.Models.Country", "Country")
-                        .WithMany("Advertisements")
+                        .WithMany()
                         .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Kufar.Models.City", b =>
                 {
                     b.HasOne("Kufar.Models.Country", "Country")
-                        .WithMany("Cities")
+                        .WithMany()
                         .HasForeignKey("CountryId");
                 });
 

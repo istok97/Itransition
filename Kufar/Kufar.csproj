@@ -21,8 +21,12 @@
     <Compile Remove="Migrations\20180817130915_Cascade1.Designer.cs" />
     <Compile Remove="Migrations\20180817131225_Cascade3.cs" />
     <Compile Remove="Migrations\20180817131225_Cascade3.Designer.cs" />
+    <Compile Remove="Migrations\20180817135352_AddedRelationshipsToCityCountryAdv.cs" />
+    <Compile Remove="Migrations\20180817135352_AddedRelationshipsToCityCountryAdv.Designer.cs" />
     <Compile Remove="Migrations\20180817143608_AddedCascadeCitiesDeleteOnCountryDeleted2.cs" />
     <Compile Remove="Migrations\20180817143608_AddedCascadeCitiesDeleteOnCountryDeleted2.Designer.cs" />
+    <Compile Remove="Migrations\20180820074231_RemoveFluentApi.cs" />
+    <Compile Remove="Migrations\20180820074231_RemoveFluentApi.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

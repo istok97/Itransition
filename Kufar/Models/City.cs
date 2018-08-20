@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace Kufar.Models
 {
     public class City
@@ -12,7 +13,6 @@ namespace Kufar.Models
 
         public Country Country { get; set; }
 
-        public ICollection<Advertisement> Advertisements { get; set; }
 
     }
 }

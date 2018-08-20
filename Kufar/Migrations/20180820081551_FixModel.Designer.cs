@@ -11,8 +11,8 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    [Migration("20180817135352_AddedRelationshipsToCityCountryAdv")]
-    partial class AddedRelationshipsToCityCountryAdv
+    [Migration("20180820081551_FixModel")]
+    partial class FixModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,22 +241,19 @@ namespace Kufar.Migrations
             modelBuilder.Entity("Kufar.Models.Advertisement", b =>
                 {
                     b.HasOne("Kufar.Models.City", "City")
-                        .WithMany("Advertisements")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("CityId");
 
                     b.HasOne("Kufar.Models.Country", "Country")
-                        .WithMany("Advertisements")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Kufar.Models.City", b =>
                 {
                     b.HasOne("Kufar.Models.Country", "Country")
-                        .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
