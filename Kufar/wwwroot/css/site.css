@@ -50,13 +50,16 @@
     overflow: hidden;
 }
 .footer {
-    position: fixed; 
-    left: 0; bottom: 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     padding: 10px;
     background: #333;
-    color: #fff; 
-    width: 100%; 
+    color: #fff;
+    width: 100%;
+    z-index: 4;
 }
+
 .language-selector {
     margin-top: 9px;
 }
