@@ -11,8 +11,8 @@ using System;
 namespace Kufar.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
-    [Migration("20180817143608_AddedCascadeCitiesDeleteOnCountryDeleted2")]
-    partial class AddedCascadeCitiesDeleteOnCountryDeleted2
+    [Migration("20180820074231_RemoveFluentApi")]
+    partial class RemoveFluentApi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -242,21 +242,18 @@ namespace Kufar.Migrations
                 {
                     b.HasOne("Kufar.Models.City", "City")
                         .WithMany("Advertisements")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CityId");
 
                     b.HasOne("Kufar.Models.Country", "Country")
                         .WithMany("Advertisements")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Kufar.Models.City", b =>
                 {
                     b.HasOne("Kufar.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CountryId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

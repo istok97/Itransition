@@ -52,32 +52,9 @@ namespace Kufar.Controllers
             }
             return View("Create");
         }
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+      
 
-            var city = await _context.Cities
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            return View(city);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var city = await _context.Cities.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Cities.Remove(city);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+      
 
        
     }
