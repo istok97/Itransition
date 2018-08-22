@@ -150,7 +150,7 @@ namespace Kufar.Controllers
                 return NotFound();
             }
             //}
-            Advertisement editadAdvertisement = _context.Advertisements.Find(id);
+            Advertisement editadAdvertisement = _context.Advertisements.Include(a => a.City).Include(a => a.Country).Single(a => a.Id == id);
             AdvertisementViewModel model = new AdvertisementViewModel()
             {
                 Id = editadAdvertisement.Id,
@@ -161,8 +161,25 @@ namespace Kufar.Controllers
                 CountryId = editadAdvertisement.Country?.Id ?? 0
             };
 
-            ViewBag.countries = _context.Countries.Select(t => new SelectListItem {Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CountryId});
-            ViewBag.cities = _context.Cities.Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CityId });
+            IQueryable<SelectListItem> countries;
+            SelectListItem selectedCountry;
+
+            if (model.CountryId == 0)
+            {
+                countries = _context.Countries.Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CountryId });
+                selectedCountry = countries.First();
+
+            }
+
+            else
+            {
+                countries = _context.Countries.Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CountryId });
+                selectedCountry = countries.Single(x => x.Selected);
+            }
+
+            int selectedCOuntryId = int.Parse(selectedCountry.Value);
+            ViewBag.countries = countries;
+            ViewBag.cities = _context.Cities.Where(c => c.Country.Id == selectedCOuntryId).Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString(), Selected = t.Id == model.CityId });
 
             return View(model);
         }
