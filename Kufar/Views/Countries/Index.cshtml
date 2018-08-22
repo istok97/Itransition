@@ -35,6 +35,7 @@
                 var isNotValid = newBody.find('[name="IsValid"]').val() === 'False';
                 if (!isNotValid) {
                     placeholderElement.find('.modal').modal('hide');
+                    location.reload();
                 }
             });
         });
