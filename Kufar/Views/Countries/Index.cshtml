@@ -35,26 +35,6 @@
                 var isNotValid = newBody.find('[name="IsValid"]').val() === 'False';
                 if (!isNotValid) {
                     placeholderElement.find('.modal').modal('hide');
-                    //$.ajax({
-                    //    type: "GET",
-                    //    url: "Countries/Countries",
-                    //    success: function (response) {
-                    //        $("#tbody").text("");
-                    //        for (var i = 0; i < response.length; i++) {
-                    //            $("#tbody").append("<tr>"
-                    //                + "<td>" + response[i].name + "</td>"
-                    //                + "<td>"
-                    //                + "<ul>"
-                    //                + "<li>"
-                    //                + "<a class=\"compItem\" href=\"/Countries/Delete/" + response[i].id + "\">Delete</a>"
-                    //                + "</li>"
-                    //                + "</ul>"
-                    //                + "</td>"
-                    //                + "</tr>"
-                    //            );
-                    //        }
-                    //    }
-                    //});
                 }
             });
         });

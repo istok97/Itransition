@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20180817143608_AddedCascadeCitiesDeleteOnCountryDeleted2.Designer.cs" />
     <Compile Remove="Migrations\20180820074231_RemoveFluentApi.cs" />
     <Compile Remove="Migrations\20180820074231_RemoveFluentApi.Designer.cs" />
+    <Compile Remove="Migrations\20180821103003_AddedDeleteForCity.cs" />
+    <Compile Remove="Migrations\20180821103003_AddedDeleteForCity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

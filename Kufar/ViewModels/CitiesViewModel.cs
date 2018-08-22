@@ -16,5 +16,7 @@ namespace Kufar.ViewModels
 
         public IEnumerable<City> Cities { get; set; }
         public Country SelectedCountry { get; set; }
+        public Country City { get; set; }
+        public Country Country { get; set; }
     }
 }

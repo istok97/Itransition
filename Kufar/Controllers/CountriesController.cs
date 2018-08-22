@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Kufar.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Kufar.ViewModels;
 
 namespace Kufar.Controllers
 {
@@ -33,12 +34,6 @@ namespace Kufar.Controllers
         }
 
         [Authorize]
-        public IActionResult CreatCity(int id)
-        {
-            return PartialView("CreateCity");
-        }
-
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Country country)
@@ -47,7 +42,7 @@ namespace Kufar.Controllers
             {
                 _context.Add(country);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Countries");
+                return RedirectToAction(nameof(Index));
 
             }
 
@@ -61,24 +56,39 @@ namespace Kufar.Controllers
             {
                 return NotFound();
             }
-
             var country = await _context.Countries
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (country == null)
+           .SingleOrDefaultAsync(m => m.Id == id);
+            DeleteCityViewModel model = new DeleteCityViewModel()
             {
-                return NotFound();
-            }
+                Id = country.Id,
+                Name = country.Name,
+                
+            };
+          
+          
 
-            return PartialView(country);
+            return PartialView(model);
         }
 
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int Id, DeleteCityViewModel deleteCityViewModel)
         {
-            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == id);
-            
+            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == Id);           
+            var nullCountryIdAdnCityId = _context.Advertisements.Where(x => x.Country.Id == Id);
+            foreach (var item in nullCountryIdAdnCityId)
+            {
+                item.Country = null;
+                item.City = null;
+
+            }
+
+            _context.Advertisements.UpdateRange(nullCountryIdAdnCityId);
+            await _context.SaveChangesAsync();
+            var cities =  _context.Cities.Where(m => m.Country.Id == Id);
+            _context.Cities.RemoveRange(cities);
+            await _context.SaveChangesAsync();
             _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
