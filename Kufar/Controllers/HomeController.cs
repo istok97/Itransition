@@ -22,6 +22,8 @@ namespace Kufar.Controllers
             ViewData["Message"] = _localizer["Message"];
             return View();
         }
+
+
      
 
     }

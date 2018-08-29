@@ -18,17 +18,17 @@
                             <h3 style="color:deepskyblue;">@Html.Raw(@u.Title)</h3>
                             <span>
                                 <hr />
-                                <h5>@Html.Raw(u.Description)</h5>
+                               <a asp-action="Index" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.TitleSort">Title</a>
                                 <hr />
                             </span>
                             <span>
                                 <hr />
-                                <h5>@Html.Raw(u.Country.Name)</h5>
+                                <h5>@Html.Raw(u.Country?.Name)</h5>
                                 <hr />
                             </span>
                             <span>
                                 <hr />
-                                <h5>@Html.Raw(u.City.Name)</h5>
+                                <h5>@Html.Raw(u.City?.Name)</h5>
                                 <hr />
                             </span>
                             <span>

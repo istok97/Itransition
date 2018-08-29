@@ -28,7 +28,7 @@ namespace Kufar.Controllers
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -46,13 +46,12 @@ namespace Kufar.Controllers
 
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                     return RedirectToAction("Index", "Home");
                     }
                 }
-
                 else
                 {
-                    ModelState.AddModelError("", "Incorrect login and / or password");
+                    ModelState.AddModelError(string.Empty, "Incorrect login and / or password");
                 }
             }
             return View(model);
@@ -63,7 +62,7 @@ namespace Kufar.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -72,7 +71,7 @@ namespace Kufar.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year.Value};
+                User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year.Value };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

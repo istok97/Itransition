@@ -9,6 +9,7 @@ using Kufar.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Kufar.ViewModels;
+using Kufar.Services;
 
 namespace Kufar.Controllers
 {
@@ -17,10 +18,14 @@ namespace Kufar.Controllers
     {
         private readonly AdvertisementDbContext _context;
 
-        public CountriesController(AdvertisementDbContext context)
+        private readonly ICountryService countryService;
+
+        public CountriesController(AdvertisementDbContext context, ICountryService countryService)
         {
+            this.countryService = countryService;
             _context = context;
         }
+
 
         [Authorize]
         public async Task<IActionResult> Index()
@@ -75,22 +80,9 @@ namespace Kufar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int Id, DeleteCityViewModel deleteCityViewModel)
         {
-            var country = await _context.Countries.SingleOrDefaultAsync(m => m.Id == Id);           
-            var nullCountryIdAdnCityId = _context.Advertisements.Where(x => x.Country.Id == Id);
-            foreach (var item in nullCountryIdAdnCityId)
-            {
-                item.Country = null;
-                item.City = null;
 
-            }
+            await countryService.DeleteCountryAsync(Id);
 
-            _context.Advertisements.UpdateRange(nullCountryIdAdnCityId);
-            await _context.SaveChangesAsync();
-            var cities =  _context.Cities.Where(m => m.Country.Id == Id);
-            _context.Cities.RemoveRange(cities);
-            await _context.SaveChangesAsync();
-            _context.Countries.Remove(country);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

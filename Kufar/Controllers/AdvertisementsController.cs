@@ -21,6 +21,7 @@ namespace Kufar.Controllers
         private readonly AdvertisementDbContext _context;
 
         private readonly IAdvertisementsService _advertisementsService;
+
         private List<City> _list;
 
         public AdvertisementsController(AdvertisementDbContext context, IAdvertisementsService advertisementsService)
@@ -28,6 +29,7 @@ namespace Kufar.Controllers
             _context = context;
             _advertisementsService = advertisementsService;
         }
+
 
         [Authorize]
         [HttpPost]
@@ -43,11 +45,12 @@ namespace Kufar.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, SortType sortOrder = SortType.TitleAsc)
+        [HttpGet]
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 3, SortType sortOrder = SortType.TitleAsc, int viewType = 0)
         {
             IQueryable<Advertisement> advertisements =
                 _context.Advertisements.Include(x => x.Country).Include(x => x.City);
-
+            
             switch (sortOrder)
             {
                 case SortType.TitleDesc:
@@ -65,22 +68,38 @@ namespace Kufar.Controllers
                     break;
             }
 
-
             var count = await advertisements.CountAsync();
             var items = await advertisements.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
             IndexViewModel viewModel = new IndexViewModel
             {
-
+                ViewType = viewType,
                 PageViewModel = new PageViewModel(count, pageNumber, pageSize),
                 SortViewModel = new SortViewModel(sortOrder),
                 Advertisements = items
             };
 
-
             return View(viewModel);
         }
+        public async Task<ActionResult> ChangePartial(int Id, int pageNumber = 1, int pageSize = 10)
+        {
+            IQueryable<Advertisement> advertisements =
+               _context.Advertisements.Include(x => x.Country).Include(x => x.City);
+            var items = await advertisements.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
+            IndexViewModel viewModel = new IndexViewModel
+            {
+
+              
+                Advertisements = items
+            };
+
+            if (Id == 1)
+            {
+                return PartialView("_Block", viewModel);
+            }
+            return PartialView("_list", viewModel);
+        }
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
@@ -149,7 +168,7 @@ namespace Kufar.Controllers
             {
                 return NotFound();
             }
-            //}
+            
             Advertisement editadAdvertisement = _context.Advertisements.Include(a => a.City).Include(a => a.Country).Single(a => a.Id == id);
             AdvertisementViewModel model = new AdvertisementViewModel()
             {

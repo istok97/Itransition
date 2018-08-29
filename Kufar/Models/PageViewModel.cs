@@ -9,8 +9,7 @@ namespace Kufar.Models
         public int FirstPages { get; set; }
         
         public PageViewModel(int count, int pageNumber, int pageSize)
-        {
-            
+        {            
             PageNumber = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             FirstPages = 1;

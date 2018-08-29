@@ -9,7 +9,6 @@ using Kufar.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using System.Globalization;
 using Microsoft.Extensions.Options;
 
 namespace Kufar
@@ -32,6 +31,9 @@ namespace Kufar
                 .AddDefaultTokenProviders();
             
             services.AddTransient<IAdvertisementsService, AdvertisementsService>();
+
+            services.AddTransient<ICountryService, CountryService>();
+
 
             services.Configure<IdentityOptions>(options =>
             {
