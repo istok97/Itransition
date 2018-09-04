@@ -3,12 +3,13 @@
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Options
-
+@using Kufar.Models.Enums
 @inject IViewLocalizer Localizer
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
     var cultureItems = LocOptions.Value.SupportedUICultures
         .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
         .ToList();
@@ -18,8 +19,11 @@
       asp-route-returnUrl="@Context.Request.Path"
       method="post">
     <div class="col-xs-1">
-    <select class="form-control" name="culture" onchange="this.form.submit();"
-            asp-for="@requestCulture.RequestCulture.UICulture.Name"
-            asp-items="cultureItems"></select>
+        <select class="form-control" name="culture" onchange="this.form.submit();"
+                asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                asp-items="cultureItems"></select>
+  
+              
     </div>
 </form>
+

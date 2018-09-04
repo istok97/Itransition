@@ -8,22 +8,17 @@
 }
 
 <a asp-action="Create" class="btn btn-primary">Create New</a>
-<a id="List" asp-action="Index" asp-route-viewType="0" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.Current"  ><span class="glyphicon glyphicon-th-list"></span></a>
-<a id="Block"  asp-action="Index" asp-route-viewType="1" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.Current" ><span class="glyphicon glyphicon-th"></span></a>
-<select  asp-items="Html.GetEnumSelectList<DisplayAdvertisement>()" ></select>
 
-@if (Model.ViewType == 0)
-{
-    Html.RenderPartial("_List", Model);
-}
-else if (Model.ViewType == 1)
-{
-    Html.RenderPartial("_Block", Model);
-}
+    <a name="changeview" onchange="this.form.submit();" asp-action="Index" asp-route-viewType="0" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.Current"><span class="glyphicon glyphicon-th-list"></span></a>
+    <a name="changeview" onchange="this.form.submit();" asp-action="Index" asp-route-viewType="1" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.Current"><span class="glyphicon glyphicon-th"></span></a>
 
-
-<page-link page-model="Model.PageViewModel" page-action="Index" page-url-sortOrder="@Model.SortViewModel.Current"></page-link>
-
-
-
-
+    @if (Model.ViewType == 0)
+    {
+        Html.RenderPartial("_List", Model);
+    }
+    else if (Model.ViewType == 1)
+    {
+        Html.RenderPartial("_Block", Model);
+    }
+  
+        <page-link page-model="Model.PageViewModel" name="pageNumber" page-action="Index" page-url-sortOrder="@Model.SortViewModel.Current"></page-link>

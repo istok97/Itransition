@@ -30,6 +30,13 @@ namespace Kufar.Controllers
             _advertisementsService = advertisementsService;
         }
 
+        [HttpPost]
+        public IActionResult GetSettings(string changeview, string returnUrl)
+        {
+            //Response.Cookies.Append(
+            //    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+            return LocalRedirect(returnUrl);
+        }
 
         [Authorize]
         [HttpPost]
@@ -81,6 +88,7 @@ namespace Kufar.Controllers
 
             return View(viewModel);
         }
+
         public async Task<ActionResult> ChangePartial(int Id, int pageNumber = 1, int pageSize = 10)
         {
             IQueryable<Advertisement> advertisements =
