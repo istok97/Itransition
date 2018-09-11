@@ -9,6 +9,7 @@ using Kufar.Models;
 using Kufar.ViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace Kufar.Controllers
 {
@@ -16,9 +17,13 @@ namespace Kufar.Controllers
     {
         private readonly AdvertisementDbContext _context;
 
-        public CitiesController(AdvertisementDbContext context)
+        private readonly ILogger<AdvertisementsController> _logger;
+
+        public CitiesController(AdvertisementDbContext context, ILogger<AdvertisementsController> logger)
         {
             _context = context;
+
+            _logger = logger;
         }
 
         [Authorize]
@@ -26,14 +31,14 @@ namespace Kufar.Controllers
         {
           
             var result = _context.Cities.Where(city => city.Country != null && city.Country.Id == id).ToList();
-
+            _logger.LogInformation("Юзер запросил создание города для страны у которой id == " + id);
 
             var citiesViewModel = new CitiesViewModel
             {
                 SelectedCountry = _context.Countries.SingleOrDefault(x => x.Id == id),
                 Cities = result
             };
-
+               _logger.LogInformation("Юзер запросил создание города для страны у которой id == " + id);
             return View(citiesViewModel);
         }
 
@@ -49,7 +54,7 @@ namespace Kufar.Controllers
                     Name = citiesViewModel.Name,
                     Country = _context.Countries.SingleOrDefault(x => x.Id == citiesViewModel.Id)
                 };
-
+             
                 _context.Add(cities);
                 await _context.SaveChangesAsync();
 

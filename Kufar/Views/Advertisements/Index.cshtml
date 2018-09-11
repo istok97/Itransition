@@ -11,7 +11,6 @@
 
     <a name="changeview" onchange="this.form.submit();" asp-action="Index" asp-route-viewType="0" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.Current"><span class="glyphicon glyphicon-th-list"></span></a>
     <a name="changeview" onchange="this.form.submit();" asp-action="Index" asp-route-viewType="1" asp-route-pageNumber="@Model.PageViewModel.PageNumber" asp-route-sortOrder="@Model.SortViewModel.Current"><span class="glyphicon glyphicon-th"></span></a>
-
     @if (Model.ViewType == 0)
     {
         Html.RenderPartial("_List", Model);
@@ -22,3 +21,4 @@
     }
   
         <page-link page-model="Model.PageViewModel" name="pageNumber" page-action="Index" page-url-sortOrder="@Model.SortViewModel.Current"></page-link>
+       

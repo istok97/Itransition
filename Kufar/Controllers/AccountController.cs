@@ -3,18 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 using Kufar.ViewModels;
 using Kufar.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Kufar.Services;
 
 namespace Kufar.Controllers
 {
+    [ServiceFilter(typeof(LogFilter))]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AdvertisementsController> _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AdvertisementsController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -26,6 +31,7 @@ namespace Kufar.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
+            _logger.LogCritical("nlog is working from a controller");
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
@@ -41,12 +47,15 @@ namespace Kufar.Controllers
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
+                       
                         return Redirect(model.ReturnUrl);
                     }
 
                     else
                     {
-                     return RedirectToAction("Index", "Home");
+                      
+                        return RedirectToAction("Index", "Home");
+
                     }
                 }
                 else
@@ -54,6 +63,7 @@ namespace Kufar.Controllers
                     ModelState.AddModelError(string.Empty, "Incorrect login and / or password");
                 }
             }
+        
             return View(model);
         }
 
@@ -62,7 +72,7 @@ namespace Kufar.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-
+            _logger.LogInformation("nlog is working from a controller");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -75,6 +85,7 @@ namespace Kufar.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    _logger.LogTrace("User is Aut", user.Email);
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }

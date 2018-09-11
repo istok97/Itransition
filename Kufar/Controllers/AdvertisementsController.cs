@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace Kufar.Controllers
 {
@@ -22,16 +23,19 @@ namespace Kufar.Controllers
 
         private readonly IAdvertisementsService _advertisementsService;
 
+        private readonly ILogger<AdvertisementsController> _logger;
+
         private List<City> _list;
 
-        public AdvertisementsController(AdvertisementDbContext context, IAdvertisementsService advertisementsService)
+        public AdvertisementsController(AdvertisementDbContext context, IAdvertisementsService advertisementsService, ILogger<AdvertisementsController> logger)
         {
             _context = context;
             _advertisementsService = advertisementsService;
+            _logger = logger;
         }
 
         [HttpPost]
-        public IActionResult GetSettings(string changeview, string returnUrl)
+        public IActionResult GetSettings(string changeview, string viewtype, string returnUrl)
         {
             //Response.Cookies.Append(
             //    new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
@@ -85,7 +89,7 @@ namespace Kufar.Controllers
                 SortViewModel = new SortViewModel(sortOrder),
                 Advertisements = items
             };
-
+            _logger.LogTrace("its good", viewModel);
             return View(viewModel);
         }
 

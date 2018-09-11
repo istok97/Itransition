@@ -10,6 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
+using NLog.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace Kufar
 {
@@ -33,8 +38,8 @@ namespace Kufar
             services.AddTransient<IAdvertisementsService, AdvertisementsService>();
 
             services.AddTransient<ICountryService, CountryService>();
-
-
+            services.AddScoped<LogFilter>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;
@@ -76,7 +81,7 @@ namespace Kufar
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseDeveloperExceptionPage();
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
@@ -90,8 +95,11 @@ namespace Kufar
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-           
-            
+
+            GlobalDiagnosticsContext.Set("configDir", "C:\\Logs");
+            GlobalDiagnosticsContext.Set("connectionString", "Server=GODYLA;Database=SiteKufar1;Trusted_Connection=True;");
+
+            loggerFactory.AddNLog();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>
@@ -102,4 +110,5 @@ namespace Kufar
             });
         }
     }
+
 }
